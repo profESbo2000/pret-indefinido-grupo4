@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo 4: Cambios Ortográficos en 1ª Persona - Pretérito Indefinido</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0b1120',
+                            card: '#1e293b',
+                            accent: '#38bdf8',
+                            purple: '#a855f7',
+                            pink: '#ec4899',
+                            emerald: '#10b981',
+                            amber: '#f59e0b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: radial-gradient(circle at top center, #1e1b4b, #0f172a, #070a12);
+            color: #f8fafc;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.2);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #a855f7, #38bdf8);
+            color: white;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .highlight-change {
+            background: rgba(236, 72, 153, 0.25);
+            border: 1px solid rgba(236, 72, 153, 0.5);
+            color: #f472b6;
+            font-weight: 800;
+            border-radius: 0.375rem;
+            padding: 0.1rem 0.4rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-100 pb-12">
+
+    <!-- HEADER Y NAVEGACIÓN -->
+    <header class="sticky top-0 z-50 glass-card border-b border-slate-700/50 bg-slate-900/85 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 via-pink-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <i class="fa-solid fa-pen-nib text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-2xl font-black font-display bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">
+                        Grupo 4: Cambios Ortográficos en 1ª Persona
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium hidden sm:block">
+                        Pretérito Indefinido • Solo YO (-CAR &gt; QU | -GAR &gt; GU | -ZAR &gt; C)
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <nav class="flex p-1 bg-slate-800/90 rounded-2xl border border-slate-700/60 overflow-x-auto">
+                <button onclick="switchTab('teoria')" id="tab-teoria" class="tab-btn active px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Teoría & Tablas</span>
+                </button>
+                <button onclick="switchTab('practica')" id="tab-practica" class="tab-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all duration-300 flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Ejercicios (12)</span>
+                </button>
+                <button onclick="switchTab('drag')" id="tab-drag" class="tab-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all duration-300 flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <span>Clasificación</span>
+                </button>
+                <button onclick="switchTab('arcade')" id="tab-arcade" class="tab-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-all duration-300 flex items-center space-x-2 whitespace-nowrap">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span>Arcade</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- BANNER DE ESTADÍSTICAS Y REGLA -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mt-6">
+        <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 bg-slate-800/40">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                    <h2 class="text-sm font-bold text-slate-200 font-display">Regla de Oro del Grupo 4</h2>
+                    <p class="text-xs text-slate-400">El cambio ortográfico ocurre <strong>ÚNICAMENTE en la 1ª persona del singular (YO)</strong> para mantener el sonido del infinitivo antes de la vocal <strong>-É</strong>. Las demás personas son completamente regulares.</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-trophy text-amber-400 text-lg"></i>
+                    <span class="text-xs text-slate-400">Puntos:</span>
+                    <span id="global-score" class="text-lg font-black text-amber-400 font-display">0</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-fire text-orange-500 text-lg"></i>
+                    <span class="text-xs text-slate-400">Racha:</span>
+                    <span id="global-streak" class="text-lg font-black text-orange-500 font-display">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow mt-6">
+
+        <!-- ================= SECCIÓN 1: TEORÍA Y TABLAS ================= -->
+        <section id="sec-teoria" class="space-y-8">
+            
+            <!-- Tarjetas de las 3 Subclases Ortográficas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Subclase -CAR > QU -->
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-l-4 border-l-purple-500 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 font-extrabold text-xs border border-purple-500/30">Subclase 1</span>
+                        <i class="fa-solid fa-spell-check text-purple-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-white font-display mb-1">-CAR &gt; QU</h3>
+                    <p class="text-xs text-slate-300 mb-4">La C pasa a QU antes de -É para sonar fuerte /k/.</p>
+                    <div class="bg-slate-900/80 rounded-xl p-3 text-xs space-y-1.5 font-mono">
+                        <div class="text-purple-300 font-bold">➔ Yo to<span class="text-pink-400 font-extrabold">qu</span>é <span class="text-slate-400">(no "tocé")</span></div>
+                        <div class="text-slate-400">Tú tocaste, Él tocó...</div>
+                        <div class="text-slate-400">Nosotros tocamos</div>
+                    </div>
+                    <div class="mt-4 text-[11px] text-slate-400">Ejemplos: <em>tocar, buscar, sacar, explicar, practicar, acercar.</em></div>
+                </div>
+
+                <!-- Subclase -GAR > GU -->
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-l-4 border-l-cyan-400 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 font-extrabold text-xs border border-cyan-500/30">Subclase 2</span>
+                        <i class="fa-solid fa-shield-cat text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-white font-display mb-1">-GAR &gt; GU</h3>
+                    <p class="text-xs text-slate-300 mb-4">Se añade U muda antes de -É para conservar el sonido /g/.</p>
+                    <div class="bg-slate-900/80 rounded-xl p-3 text-xs space-y-1.5 font-mono">
+                        <div class="text-cyan-300 font-bold">➔ Yo pa<span class="text-pink-400 font-extrabold">gu</span>é <span class="text-slate-400">(no "pagé")</span></div>
+                        <div class="text-slate-400">Tú pagaste, Él pagó...</div>
+                        <div class="text-slate-400">Nosotros pagamos</div>
+                    </div>
+                    <div class="mt-4 text-[11px] text-slate-400">Ejemplos: <em>pagar, llegar, jugar, apagar, cargar, navegar.</em></div>
+                </div>
+
+                <!-- Subclase -ZAR > C -->
+                <div class="glass-card glass-card-hover rounded-2xl p-6 border-l-4 border-l-pink-500 relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-1 rounded-full bg-pink-500/20 text-pink-300 font-extrabold text-xs border border-pink-500/30">Subclase 3</span>
+                        <i class="fa-solid fa-font text-pink-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-white font-display mb-1">-ZAR &gt; C</h3>
+                    <p class="text-xs text-slate-300 mb-4">La Z cambia a C antes de E (norma ortográfica del español).</p>
+                    <div class="bg-slate-900/80 rounded-xl p-3 text-xs space-y-1.5 font-mono">
+                        <div class="text-pink-300 font-bold">➔ Yo empe<span class="text-cyan-400 font-extrabold">c</span>é <span class="text-slate-400">(no "empezé")</span></div>
+                        <div class="text-slate-400">Tú empezaste, Él empezó...</div>
+                        <div class="text-slate-400">Nosotros empezamos</div>
+                    </div>
+                    <div class="mt-4 text-[11px] text-slate-400">Ejemplos: <em>empezar, comenzar, almorzar, cruzar, analizar, rezar.</em></div>
+                </div>
+            </div>
+
+            <!-- Tabla Resumen Visual -->
+            <div class="glass-card rounded-2xl p-6 bg-slate-800/50">
+                <h3 class="text-lg font-extrabold text-white font-display mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-table text-cyan-400"></i>
+                    <span>Resumen de Cambios Ortográficos</span>
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-700 text-slate-400 uppercase font-mono">
+                                <th class="p-3">Terminación</th>
+                                <th class="p-3">Cambio en YO</th>
+                                <th class="p-3">Ejemplo (YO)</th>
+                                <th class="p-3">Explicación Fonética</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            <tr>
+                                <td class="p-3 font-bold text-purple-400">-CAR</td>
+                                <td class="p-3 font-mono font-bold text-pink-400">C ➔ QU</td>
+                                <td class="p-3 font-bold text-white">toqué / busqué</td>
+                                <td class="p-3 text-slate-300">Para conservar el sonido fuerte /k/ antes de la vocal E.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-cyan-400">-GAR</td>
+                                <td class="p-3 font-mono font-bold text-pink-400">G ➔ GU</td>
+                                <td class="p-3 font-bold text-white">pagué / llegué</td>
+                                <td class="p-3 text-slate-300">Para mantener el sonido suave /g/ antes de E (la 'u' es muda).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-pink-400">-ZAR</td>
+                                <td class="p-3 font-mono font-bold text-cyan-400">Z ➔ C</td>
+                                <td class="p-3 font-bold text-white">empecé / crucé</td>
+                                <td class="p-3 text-slate-300">En español la consonante Z raramente se escribe antes de E/I; se usa C.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Visualizador Interactivo de Verbos -->
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700/60">
+                    <div>
+                        <h2 class="text-2xl font-black text-white font-display">Visor de Conjugación Interactiva</h2>
+                        <p class="text-xs text-slate-400 mt-0.5">Selecciona un verbo para comprobar que el cambio ortográfico ocurre ÚNICAMENTE en "YO".</p>
+                    </div>
+
+                    <!-- Botones de Verbos -->
+                    <div class="flex flex-wrap gap-2" id="verb-selector-buttons">
+                        <!-- Generados por JS -->
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <!-- Tabla de Conjugación -->
+                    <div class="lg:col-span-8 overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-700/50">
+                                    <th class="py-3 px-4">Persona / Pronombre</th>
+                                    <th class="py-3 px-4">Conjugación Indefinido</th>
+                                    <th class="py-3 px-4 text-center">¿Tiene Cambio?</th>
+                                    <th class="py-3 px-4 text-right">Escuchar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verb-table-body" class="divide-y divide-slate-800/60 font-medium">
+                                <!-- Inyectado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Ficha Informativa -->
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-700/60">
+                            <span id="verb-badge-type" class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                                Subclase -CAR &gt; QU
+                            </span>
+                            <h3 id="verb-info-title" class="text-3xl font-black text-white font-display mt-2">TOCAR</h3>
+                            <p id="verb-info-desc" class="text-xs text-slate-300 mt-2 leading-relaxed">
+                                Cambia la 'c' por 'qu' solo en la 1ª persona del singular (yo) para mantener el sonido /k/.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-slate-800">
+                                <button onclick="speakCurrentVerb()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 font-bold text-xs flex items-center justify-center space-x-2 transition">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <span>Pronunciar Toda la Tabla</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= SECCIÓN 2: EJERCICIOS (12 FRASES) ================= -->
+        <section id="sec-practica" class="space-y-8 hidden">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700/60">
+                    <div>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase font-bold">
+                            Práctica Contextual
+                        </span>
+                        <h2 class="text-2xl font-black text-white font-display mt-1">Completa las 12 Oraciones</h2>
+                        <p class="text-xs text-slate-400">Pon atención al sujeto: si es "Yo", aplica la regla ortográfica. ¡En los demás sujetos la forma es regular!</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-slate-900 px-4 py-2 rounded-xl border border-slate-700 text-xs text-slate-300 font-bold">
+                            Aciertos: <span id="fill-score-counter" class="text-cyan-400">0 / 12</span>
+                        </div>
+                        <button onclick="checkFillAnswers()" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20 hover:opacity-90 transition">
+                            <i class="fa-solid fa-check mr-1"></i> Verificar Todo
+                        </button>
+                    </div>
+                </div>
+
+                <div id="fill-questions-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Generado por JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN 3: DRAG & DROP / CLASIFICACIÓN ================= -->
+        <section id="sec-drag" class="space-y-8 hidden">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700/60">
+                    <div>
+                        <h2 class="text-2xl font-black text-white font-display">Clasificación de Formas Verbales (YO)</h2>
+                        <p class="text-xs text-slate-400">Arrastra o haz clic en la forma conjugada de primera persona para clasificarla según su cambio ortográfico (-QUÉ, -GUÉ, -CÉ).</p>
+                    </div>
+                    <button onclick="resetDragGame()" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reiniciar
+                    </button>
+                </div>
+
+                <!-- Elementos para Arrastrar -->
+                <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800 mb-6">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Formas de 1ª persona disponibles:</span>
+                    <div id="drag-items-pool" class="flex flex-wrap gap-3">
+                        <!-- JS inyecta tarjetas -->
+                    </div>
+                </div>
+
+                <!-- Casillas de Destino -->
+                <div id="drag-drop-zones" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- JS inyecta zonas -->
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-700/60 flex justify-end">
+                    <button onclick="checkDragAnswers()" class="px-6 py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/20 hover:opacity-90 transition">
+                        Comprobar Clasificación
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN 4: MINIJUEGO ARCADE ================= -->
+        <section id="sec-arcade" class="space-y-8 hidden">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-700/80 text-center max-w-2xl mx-auto">
+                
+                <!-- Inicio Arcade -->
+                <div id="arcade-start-screen" class="py-12 space-y-6">
+                    <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-pink-500 to-purple-600 text-white text-4xl flex items-center justify-center mx-auto shadow-xl shadow-pink-500/30">
+                        ✍️
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-black text-white font-display">Arcade: Desafío Ortográfico</h2>
+                        <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-md mx-auto">
+                            ¡Tienes 30 segundos! Elige rápidamente la ortografía correcta para la conjugación indicada. ¡Cuidado con las falsas formas!
+                        </p>
+                    </div>
+                    <button onclick="startArcadeGame()" class="px-8 py-4 rounded-2xl font-black text-base bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 text-white shadow-xl shadow-pink-500/30 hover:scale-105 transition">
+                        ¡EMPEZAR DESAFÍO!
+                    </button>
+                </div>
+
+                <!-- Pantalla de Juego Activo -->
+                <div id="arcade-play-screen" class="hidden space-y-6">
+                    <!-- BARRA DE PROGRESO DE TIEMPO -->
+                    <div class="w-full bg-slate-900 rounded-full h-3 border border-slate-700 overflow-hidden relative">
+                        <div id="arcade-progress-bar" class="bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 h-full w-full transition-all duration-300"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-slate-900/80 px-6 py-3 rounded-2xl border border-slate-800">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-clock text-cyan-400"></i>
+                            <span id="arcade-timer" class="text-xl font-black text-cyan-400 font-display">30s</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-star text-amber-400"></i>
+                            <span id="arcade-score" class="text-xl font-black text-amber-400 font-display">0 pts</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-slate-900/90 border border-purple-500/30 relative">
+                        <span id="arcade-prompt-subject" class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                            1ª PERSONA SINGULAR (YO)
+                        </span>
+                        <h3 id="arcade-prompt-verb" class="text-3xl font-black text-white font-display mt-3">
+                            BUSCAR
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">¿Cuál es la forma ortográficamente correcta en Pretérito Indefinido?</p>
+                    </div>
+
+                    <!-- HUD de Feedback de Respuesta -->
+                    <div id="arcade-feedback-hud" class="hidden py-2 px-4 rounded-xl text-xs font-extrabold text-center transition"></div>
+
+                    <div id="arcade-options-grid" class="grid grid-cols-2 gap-4">
+                        <!-- JS genera opciones -->
+                    </div>
+                </div>
+
+                <!-- Pantalla de Fin de Juego -->
+                <div id="arcade-end-screen" class="hidden py-8 space-y-6">
+                    <div class="w-20 h-20 rounded-full bg-amber-500/20 text-amber-400 text-4xl flex items-center justify-center mx-auto border border-amber-500/40">
+                        🏆
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-white font-display">¡Tiempo Cumplido!</h3>
+                        <p class="text-xs text-slate-400 mt-1">Puntuación final alcanzada:</p>
+                        <div id="arcade-final-score" class="text-4xl font-black text-amber-400 font-display mt-2">
+                            0 pts
+                        </div>
+                    </div>
+                    <button onclick="startArcadeGame()" class="px-8 py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:opacity-90 transition">
+                        Intentar de Nuevo
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SCRIPT DE LÓGICA Y JUEGOS -->
+    <script>
+        // --- BASE DE DATOS DE VERBOS DEL GRUPO 4 ---
+        const ALL_VERBS = {
+            tocar: {
+                title: "TOCAR",
+                type: "Subclase -CAR > QU",
+                desc: "Cambia 'c' por 'qu' únicamente en la 1ª persona 'yo' (toqué) para mantener el sonido /k/.",
+                forms: [
+                    { pronoun: "Yo", form: "to<span class='highlight-change'>qu</span>é", change: true },
+                    { pronoun: "Tú", form: "tocaste", change: false },
+                    { pronoun: "Él / Ella / Ud.", form: "tocó", change: false },
+                    { pronoun: "Nosotros/as", form: "tocamos", change: false },
+                    { pronoun: "Vosotros/as", form: "tocasteis", change: false },
+                    { pronoun: "Ellos / Ellas / Uds.", form: "tocaron", change: false }
+                ]
+            },
+            pagar: {
+                title: "PAGAR",
+                type: "Subclase -GAR > GU",
+                desc: "Agrega 'u' muda después de la 'g' en la forma 'yo' (pagué) para mantener el sonido /g/.",
+                forms: [
+                    { pronoun: "Yo", form: "pa<span class='highlight-change'>gu</span>é", change: true },
+                    { pronoun: "Tú", form: "pagaste", change: false },
+                    { pronoun: "Él / Ella / Ud.", form: "pagó", change: false },
+                    { pronoun: "Nosotros/as", form: "pagamos", change: false },
+                    { pronoun: "Vosotros/as", form: "pagasteis", change: false },
+                    { pronoun: "Ellos / Ellas / Uds.", form: "pagaron", change: false }
+                ]
+            },
+            empezar: {
+                title: "EMPEZAR",
+                type: "Subclase -ZAR > C",
+                desc: "La 'z' cambia a 'c' en la primera persona 'yo' (empecé) antes de la vocal 'e'.",
+                forms: [
+                    { pronoun: "Yo", form: "empe<span class='highlight-change'>c</span>é", change: true },
+                    { pronoun: "Tú", form: "empezaste", change: false },
+                    { pronoun: "Él / Ella / Ud.", form: "empezó", change: false },
+                    { pronoun: "Nosotros/as", form: "empezamos", change: false },
+                    { pronoun: "Vosotros/as", form: "empezasteis", change: false },
+                    { pronoun: "Ellos / Ellas / Uds.", form: "empezaron", change: false }
+                ]
+            },
+            buscar: {
+                title: "BUSCAR",
+                type: "Subclase -CAR > QU",
+                desc: "Hace cambio de C a QU en la primera persona: yo busqué.",
+                forms: [
+                    { pronoun: "Yo", form: "bus<span class='highlight-change'>qu</span>é", change: true },
+                    { pronoun: "Tú", form: "buscaste", change: false },
+                    { pronoun: "Él / Ella / Ud.", form: "buscó", change: false },
+                    { pronoun: "Nosotros/as", form: "buscamos", change: false },
+                    { pronoun: "Vosotros/as", form: "buscasteis", change: false },
+                    { pronoun: "Ellos / Ellas / Uds.", form: "buscaron", change: false }
+                ]
+            },
+            llegar: {
+                title: "LLEGAR",
+                type: "Subclase -GAR > GU",
+                desc: "Añade 'u' muda en primera persona singular: yo llegué.",
+                forms: [
+                    { pronoun: "Yo", form: "lle<span class='highlight-change'>gu</span>é", change: true },
+                    { pronoun: "Tú", form: "llegaste", change: false },
+                    { pronoun: "Él / Ella / Ud.", form: "llegó", change: false },
+                    { pronoun: "Nosotros/as", form: "llegamos", change: false },
+                    { pronoun: "Vosotros/as", form: "llegasteis", change: false },
+                    { pronoun: "Ellos / Ellas / Uds.", form: "llegaron", change: false }
+                ]
+            },
+            almorzar: {
+                title: "ALMORZAR",
+                type: "Subclase -ZAR > C",
+                desc: "Cambia Z por C en la forma yo: yo almorcé.",
+                forms: [
+                    { pronoun: "Yo", form: "almor<span class='highlight-change'>c</span>é", change: true },
+                    { pronoun: "Tú", form: "almorzaste", change: false },
+                    { pronoun: "Él / Ella / Ud.", form: "almorzó", change: false },
+                    { pronoun: "Nosotros/as", form: "almorzamos", change: false },
+                    { pronoun: "Vosotros/as", form: "almorzasteis", change: false },
+                    { pronoun: "Ellos / Ellas / Uds.", form: "almorzaron", change: false }
+                ]
+            }
+        };
+
+        let activeVerbKey = 'tocar';
+        let globalScore = 0;
+        let globalStreak = 0;
+
+        // --- NAVEGACIÓN ENTRE PESTAÑAS ---
+        function switchTab(tabName) {
+            document.querySelectorAll('section[id^="sec-"]').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(`sec-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            if (tabName === 'practica') initFillQuestions();
+            if (tabName === 'drag') initDragGame();
+        }
+
+        // --- CÓDIGO VISOR DE TABLAS ---
+        function initVerbSelector() {
+            const container = document.getElementById('verb-selector-buttons');
+            container.innerHTML = '';
+
+            Object.keys(ALL_VERBS).forEach(key => {
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 rounded-xl font-bold text-xs transition ${key === activeVerbKey ? 'bg-gradient-to-r from-purple-600 to-cyan-500 text-white shadow-md' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`;
+                btn.textContent = ALL_VERBS[key].title;
+                btn.onclick = () => selectVerb(key);
+                container.appendChild(btn);
+            });
+
+            renderVerbTable(activeVerbKey);
+        }
+
+        function selectVerb(key) {
+            activeVerbKey = key;
+            initVerbSelector();
+        }
+
+        function renderVerbTable(key) {
+            const data = ALL_VERBS[key];
+            document.getElementById('verb-badge-type').textContent = data.type;
+            document.getElementById('verb-info-title').textContent = data.title;
+            document.getElementById('verb-info-desc').textContent = data.desc;
+
+            const tbody = document.getElementById('verb-table-body');
+            tbody.innerHTML = '';
+
+            data.forms.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = item.change ? "bg-pink-950/20 hover:bg-pink-950/30 transition" : "hover:bg-slate-800/40 transition";
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-slate-300 text-xs sm:text-sm font-semibold">${item.pronoun}</td>
+                    <td class="py-3 px-4 text-white font-bold text-sm sm:text-base">${item.form}</td>
+                    <td class="py-3 px-4 text-center">
+                        ${item.change 
+                            ? '<span class="text-[10px] uppercase font-black px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/30 animate-pulse">¡Cambio en YO!</span>' 
+                            : '<span class="text-[10px] text-slate-500">Regular</span>'}
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <button onclick="speakText('${item.form.replace(/<[^>]*>/g, '')}')" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-cyan-400 flex items-center justify-center transition ml-auto">
+                            <i class="fa-solid fa-volume-low text-xs"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakCurrentVerb() {
+            const data = ALL_VERBS[activeVerbKey];
+            const text = data.forms.map(f => f.form.replace(/<[^>]*>/g, '')).join(', ');
+            speakText(`${data.title}: ${text}`);
+        }
+
+        // --- SECCIÓN 2: 12 EJERCICIOS DE COMPLETAR ESPACIOS ---
+        const FILL_DATA = [
+            { sentence: "Ayer yo ________ (buscar) mis llaves por toda la casa.", answer: "busqué", explanation: "Sujeto: 'Yo' + verbo -CAR. Cambia C a QU (busqué)." },
+            { sentence: "Ayer yo ________ (llegar) tarde a la reunión por el tráfico.", answer: "llegué", explanation: "Sujeto: 'Yo' + verbo -GAR. Agrega 'u' muda (llegué)." },
+            { sentence: "El año pasado yo ________ (empezar) a estudiar español.", answer: "empecé", explanation: "Sujeto: 'Yo' + verbo -ZAR. La Z cambia a C (empecé)." },
+            { sentence: "Nosotros ________ (pagar) la cuenta del restaurante juntos.", answer: "pagamos", explanation: "Sujeto: 'Nosotros'. ¡Ojo! No hay cambio ortográfico, es regular." },
+            { sentence: "Ayer yo ________ (toque) la guitarra en el concierto de la escuela.", answer: "toqué", explanation: "Sujeto: 'Yo' + verbo -CAR. Se escribe con 'qu' (toqué)." },
+            { sentence: "Mis amigos ________ (jugar) al fútbol todo el fin de semana.", answer: "jugaron", explanation: "Sujeto: 'Mis amigos' (ellos). Forma regular de Pretérito Indefinido." },
+            { sentence: "Anoche yo ________ (almorzar) con mi familia en un restaurante italiano.", answer: "almorcé", explanation: "Sujeto: 'Yo' + verbo -ZAR. La Z cambia a C (almorcé)." },
+            { sentence: "Yo ________ (sacar) una excelente nota en el examen de gramática.", answer: "saqué", explanation: "Sujeto: 'Yo' + verbo -CAR. Cambia a 'qu' (saqué)." },
+            { sentence: "María ________ (explicar) la lección a sus compañeros de clase.", answer: "explicó", explanation: "Sujeto: 'María' (ella). Forma regular de 3ª persona (explicó)." },
+            { sentence: "Ayer yo ________ (apagar) todas las luces antes de salir.", answer: "apagué", explanation: "Sujeto: 'Yo' + verbo -GAR. Se escribe con 'gu' (apagué)." },
+            { sentence: "Yo ________ (cruzar) la avenida con mucho cuidado.", answer: "crucé", explanation: "Sujeto: 'Yo' + verbo -ZAR. Z cambia a C (crucé)." },
+            { sentence: "Tú ________ (practicar) deportes todas las tardes.", answer: "practicaste", explanation: "Sujeto: 'Tú'. Forma regular en -aste (practicaste)." }
+        ];
+
+        function initFillQuestions() {
+            const container = document.getElementById('fill-questions-container');
+            container.innerHTML = '';
+
+            FILL_DATA.forEach((item, idx) => {
+                const parts = item.sentence.split('________');
+                const div = document.createElement('div');
+                div.className = "p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between space-y-3";
+
+                div.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">Frase ${idx + 1}</span>
+                        </div>
+                        <div class="text-sm sm:text-base text-slate-200 leading-relaxed">
+                            <span>${parts[0]}</span>
+                            <input type="text" id="fill-in-${idx}" class="mx-1 px-3 py-1 rounded-lg bg-slate-800 border border-slate-600 text-white font-bold focus:border-cyan-400 focus:outline-none w-36 text-center text-sm" placeholder="respuesta..." autocomplete="off" />
+                            <span>${parts[1]}</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800/80">
+                        <span id="fill-fb-${idx}" class="text-xs font-semibold text-slate-400">💡 Escribe tu respuesta y presiona 'Verificar'.</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            updateFillScoreCounter(0);
+        }
+
+        function checkFillAnswers() {
+            let correctCount = 0;
+
+            FILL_DATA.forEach((item, idx) => {
+                const input = document.getElementById(`fill-in-${idx}`);
+                const fb = document.getElementById(`fill-fb-${idx}`);
+                const val = input.value.trim().toLowerCase();
+
+                if (val === item.answer.toLowerCase()) {
+                    correctCount++;
+                    input.className = "mx-1 px-3 py-1 rounded-lg bg-emerald-950 border-2 border-emerald-500 text-emerald-300 font-bold w-36 text-center text-sm";
+                    fb.innerHTML = `<span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i>¡Correcto!</span> <span class="text-slate-400">(${item.explanation})</span>`;
+                } else {
+                    input.className = "mx-1 px-3 py-1 rounded-lg bg-rose-950 border-2 border-rose-500 text-rose-300 font-bold w-36 text-center text-sm";
+                    fb.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-circle-xmark mr-1"></i>Correcto: <strong>${item.answer}</strong>.</span> <span class="text-slate-400">(${item.explanation})</span>`;
+                }
+            });
+
+            updateFillScoreCounter(correctCount);
+
+            if (correctCount === FILL_DATA.length) {
+                triggerConfetti();
+            }
+            addScore(correctCount * 15);
+        }
+
+        function updateFillScoreCounter(count) {
+            const counterElem = document.getElementById('fill-score-counter');
+            if (counterElem) {
+                counterElem.textContent = `${count} / ${FILL_DATA.length}`;
+            }
+        }
+
+        // --- SECCIÓN 3: DRAG & DROP ---
+        const DRAG_ITEMS = [
+            { id: "dg1", form: "busqué", category: "-QUÉ (-CAR)" },
+            { id: "dg2", form: "pagué", category: "-GUÉ (-GAR)" },
+            { id: "dg3", form: "empecé", category: "-CÉ (-ZAR)" },
+            { id: "dg4", form: "saqué", category: "-QUÉ (-CAR)" },
+            { id: "dg5", form: "llegué", category: "-GUÉ (-GAR)" },
+            { id: "dg6", form: "almorcé", category: "-CÉ (-ZAR)" },
+            { id: "dg7", form: "explicqué", category: "-QUÉ (-CAR)" },
+            { id: "dg8", form: "apagué", category: "-GUÉ (-GAR)" }
+        ];
+
+        let selectedDragId = null;
+
+        function initDragGame() {
+            const pool = document.getElementById('drag-items-pool');
+            const zones = document.getElementById('drag-drop-zones');
+
+            pool.innerHTML = '';
+            zones.innerHTML = '';
+
+            const shuffled = [...DRAG_ITEMS].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(item => {
+                const tag = document.createElement('div');
+                tag.id = `drag-${item.id}`;
+                tag.draggable = true;
+                tag.className = "px-4 py-2 rounded-xl bg-purple-600/30 border border-purple-500/50 text-purple-200 font-bold text-xs sm:text-sm cursor-grab active:cursor-grabbing hover:bg-purple-600/50 transition";
+                tag.textContent = item.form.replace('explicqué', 'expliqué');
+
+                tag.ondragstart = (e) => {
+                    e.dataTransfer.setData('text/plain', item.id);
+                    selectedDragId = item.id;
+                };
+
+                tag.onclick = () => {
+                    document.querySelectorAll('#drag-items-pool div').forEach(d => d.classList.remove('ring-2', 'ring-cyan-400'));
+                    tag.classList.add('ring-2', 'ring-cyan-400');
+                    selectedDragId = item.id;
+                };
+
+                pool.appendChild(tag);
+            });
+
+            const categories = ["-QUÉ (-CAR)", "-GUÉ (-GAR)", "-CÉ (-ZAR)"];
+
+            categories.forEach(cat => {
+                const zone = document.createElement('div');
+                zone.className = "bg-slate-900/60 p-4 rounded-2xl border-2 border-dashed border-slate-700 space-y-3 min-h-[140px]";
+                zone.dataset.category = cat;
+
+                zone.innerHTML = `
+                    <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider block">Terminación ${cat}</span>
+                    <div id="drop-box-${cat.replace(/[^a-zA-Z0-9]/g, '')}" class="p-3 rounded-xl bg-slate-800/80 min-h-[60px] flex flex-wrap gap-2 items-center justify-center text-xs text-slate-500 font-semibold">
+                        Arrastra o toca aquí
+                    </div>
+                `;
+
+                zone.ondragover = (e) => e.preventDefault();
+                zone.ondrop = (e) => {
+                    e.preventDefault();
+                    const id = e.dataTransfer.getData('text/plain') || selectedDragId;
+                    placeDragInZone(id, cat);
+                };
+
+                zone.onclick = () => {
+                    if(selectedDragId) {
+                        placeDragInZone(selectedDragId, cat);
+                        selectedDragId = null;
+                    }
+                };
+
+                zones.appendChild(zone);
+            });
+        }
+
+        function placeDragInZone(itemId, category) {
+            const item = DRAG_ITEMS.find(i => i.id === itemId);
+            if (!item) return;
+
+            const box = document.getElementById(`drop-box-${category.replace(/[^a-zA-Z0-9]/g, '')}`);
+            if(box) {
+                const badge = document.createElement('span');
+                badge.className = "px-3 py-1 rounded-lg bg-purple-900/50 border border-purple-500/50 text-purple-200 font-bold text-xs";
+                badge.textContent = item.form === "explicqué" ? "expliqué" : item.form;
+                badge.dataset.itemId = itemId;
+
+                box.appendChild(badge);
+
+                const elem = document.getElementById(`drag-${itemId}`);
+                if(elem) elem.style.display = 'none';
+            }
+        }
+
+        function checkDragAnswers() {
+            let correct = 0;
+            DRAG_ITEMS.forEach(item => {
+                const box = document.getElementById(`drop-box-${item.category.replace(/[^a-zA-Z0-9]/g, '')}`);
+                if(box) {
+                    const badges = box.querySelectorAll('span');
+                    badges.forEach(b => {
+                        if(b.dataset.itemId === item.id) {
+                            correct++;
+                            b.className = "px-3 py-1 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 font-bold text-xs";
+                        }
+                    });
+                }
+            });
+
+            if(correct === DRAG_ITEMS.length) triggerConfetti();
+            addScore(correct * 20);
+        }
+
+        function resetDragGame() {
+            initDragGame();
+        }
+
+        // --- SECCIÓN 4: MINIJUEGO ARCADE ---
+        const ARCADE_QUESTIONS = [
+            { subject: "Yo", verb: "BUSCAR", correct: "busqué", options: ["buscé", "busqué", "busque", "busquó"] },
+            { subject: "Yo", verb: "PAGAR", correct: "pagué", options: ["pagé", "pagué", "pague", "pagui"] },
+            { subject: "Yo", verb: "EMPEZAR", correct: "empecé", options: ["empezé", "empecé", "empece", "empezai"] },
+            { subject: "Yo", verb: "TOCAR", correct: "toqué", options: ["tocé", "toqué", "toque", "tocui"] },
+            { subject: "Yo", verb: "LLEGAR", correct: "llegué", options: ["llegé", "llegué", "llegue", "llegui"] },
+            { subject: "Yo", verb: "ALMORZAR", correct: "almorcé", options: ["almorzé", "almorcé", "almorce", "almorzué"] },
+            { subject: "Yo", verb: "SACAR", correct: "saqué", options: ["sacé", "saqué", "saque", "sacui"] },
+            { subject: "Yo", verb: "CRUZAR", correct: "crucé", options: ["cruzé", "crucé", "cruce", "cruzui"] }
+        ];
+
+        let arcadeTimer = null;
+        let arcadeTimeLeft = 30;
+        let arcadeScore = 0;
+        let arcadeIndex = 0;
+        let isAnswering = false;
+
+        function startArcadeGame() {
+            document.getElementById('arcade-start-screen').classList.add('hidden');
+            document.getElementById('arcade-end-screen').classList.add('hidden');
+            document.getElementById('arcade-play-screen').classList.remove('hidden');
+
+            arcadeTimeLeft = 30;
+            arcadeScore = 0;
+            arcadeIndex = 0;
+            isAnswering = false;
+
+            document.getElementById('arcade-timer').textContent = `${arcadeTimeLeft}s`;
+            document.getElementById('arcade-score').textContent = `0 pts`;
+            document.getElementById('arcade-progress-bar').style.width = '100%';
+            document.getElementById('arcade-feedback-hud').classList.add('hidden');
+
+            renderArcadeQuestion();
+
+            clearInterval(arcadeTimer);
+            arcadeTimer = setInterval(() => {
+                arcadeTimeLeft--;
+                document.getElementById('arcade-timer').textContent = `${arcadeTimeLeft}s`;
+                
+                const percentage = Math.max(0, (arcadeTimeLeft / 30) * 100);
+                document.getElementById('arcade-progress-bar').style.width = `${percentage}%`;
+
+                if(arcadeTimeLeft <= 0) {
+                    endArcadeGame();
+                }
+            }, 1000);
+        }
+
+        function renderArcadeQuestion() {
+            isAnswering = false;
+            const q = ARCADE_QUESTIONS[arcadeIndex % ARCADE_QUESTIONS.length];
+            document.getElementById('arcade-prompt-subject').textContent = `${q.subject} (1ª persona)`;
+            document.getElementById('arcade-prompt-verb').textContent = q.verb;
+
+            const hud = document.getElementById('arcade-feedback-hud');
+            hud.classList.add('hidden');
+
+            const grid = document.getElementById('arcade-options-grid');
+            grid.innerHTML = '';
+
+            const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "arcade-opt-btn p-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-bold text-base transition hover:scale-105 active:scale-95";
+                btn.textContent = opt;
+
+                btn.onclick = () => handleArcadeChoice(opt, q, btn);
+                grid.appendChild(btn);
+            });
+        }
+
+        function handleArcadeChoice(selectedOpt, question, clickedBtn) {
+            if (isAnswering) return;
+            isAnswering = true;
+
+            const hud = document.getElementById('arcade-feedback-hud');
+            hud.classList.remove('hidden');
+
+            const allButtons = document.querySelectorAll('.arcade-opt-btn');
+            allButtons.forEach(b => b.classList.add('pointer-events-none'));
+
+            if (selectedOpt === question.correct) {
+                arcadeScore += 25;
+                document.getElementById('arcade-score').textContent = `${arcadeScore} pts`;
+                clickedBtn.className = "arcade-opt-btn p-4 rounded-xl bg-emerald-600 border-2 border-emerald-300 text-white font-black text-base transition scale-105";
+                hud.className = "py-2 px-4 rounded-xl text-xs font-extrabold text-center bg-emerald-950 text-emerald-300 border border-emerald-500 block";
+                hud.innerHTML = `✨ ¡CORRECTO! +25 pts`;
+            } else {
+                clickedBtn.className = "arcade-opt-btn p-4 rounded-xl bg-rose-600 border-2 border-rose-300 text-white font-black text-base transition";
+                
+                allButtons.forEach(b => {
+                    if (b.textContent === question.correct) {
+                        b.className = "arcade-opt-btn p-4 rounded-xl bg-emerald-600 border-2 border-emerald-300 text-white font-black text-base transition animate-bounce";
+                    }
+                });
+
+                hud.className = "py-2 px-4 rounded-xl text-xs font-extrabold text-center bg-rose-950 text-rose-300 border border-rose-500 block";
+                hud.innerHTML = `❌ ¡INCORRECTO! La ortografía correcta es: <strong class="underline">${question.correct}</strong>`;
+            }
+
+            setTimeout(() => {
+                arcadeIndex++;
+                renderArcadeQuestion();
+            }, 1000);
+        }
+
+        function endArcadeGame() {
+            clearInterval(arcadeTimer);
+            document.getElementById('arcade-play-screen').classList.add('hidden');
+            document.getElementById('arcade-end-screen').classList.remove('hidden');
+
+            document.getElementById('arcade-final-score').textContent = `${arcadeScore} pts`;
+            if(arcadeScore >= 100) triggerConfetti();
+            addScore(arcadeScore);
+        }
+
+        function addScore(pts) {
+            globalScore += pts;
+            if(pts > 0) globalStreak++;
+            document.getElementById('global-score').textContent = globalScore;
+            document.getElementById('global-streak').textContent = globalStreak;
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        // Inicialización al cargar la página
+        window.onload = function() {
+            initVerbSelector();
+        };
+    </script>
+</body>
+</html>
